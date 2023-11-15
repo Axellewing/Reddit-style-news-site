@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>My Base Site</title>
+        <!-- <link rel="stylesheet" href="{% static 'css/style.css' %}"> -->
+    </head>
+    <body>
+        <header>
+            <div class="header_inner">                
+                
+                    <a href="#">
+                        <img src="{{user_profile.profileimg.url}}" class="header-avatar" alt="">
+                    </a>
+                    <div uk-drop="mode: click;offset:9" class="header_dropdown profile_dropdown border-t">
+                        <ul>
+                            <li><a href="settings"> Account setting </a> </li>
+                            <li><a href="logout"> Log Out</a></li>
+                        </ul>
+                    </div>
+
+            </div>
+        </header>
+
+    </body>
+</html>
