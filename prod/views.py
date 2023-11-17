@@ -10,6 +10,10 @@ def index(request):
     return render(request, "index.html")
 
 def signin(request):
+    # if request.method == 'POST':
+    #     username = request.POST['username']
+    #     email = request.POST['email']
+    #     password = request.POST['password']
     return render(request, "signin.html")
 
 def signup(request):
@@ -35,7 +39,7 @@ def signup(request):
 
                 # create profile
                 user_loged = User.objects.get(username=username)
-                user_profile = Profile.objects.create(user=user_loged, user_id=user_loged.id)
+                user_profile = Profile.objects.create(user=user_loged, id_user=user_loged.id)
                 user_profile.save()
                 return redirect('index')
         else:
