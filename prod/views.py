@@ -9,6 +9,10 @@ from django.contrib.auth.decorators import login_required
 def index(request):
     return render(request, "index.html")
 
+def logout(request):
+    auth.logout(request)
+    return redirect('/')
+
 def signin(request):
     if request.method == 'POST':
         username = request.POST['username']
