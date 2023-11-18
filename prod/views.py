@@ -10,11 +10,21 @@ def index(request):
     return render(request, "index.html")
 
 def signin(request):
-    # if request.method == 'POST':
-    #     username = request.POST['username']
-    #     email = request.POST['email']
-    #     password = request.POST['password']
-    return render(request, "signin.html")
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+
+        # lodin
+        user = auth.authenticate(username=username, password=password)
+
+        if user is not None:
+            auth.login(request, user)
+            return redirect('/')
+        else:
+            messages.info(request, 'Invalid credentials')
+            return redirect('signin')
+    else:
+        return render(request, "signin.html")
 
 def signup(request):
     if request.method == 'POST':
@@ -41,7 +51,7 @@ def signup(request):
                 user_loged = User.objects.get(username=username)
                 user_profile = Profile.objects.create(user=user_loged, id_user=user_loged.id)
                 user_profile.save()
-                return redirect('index')
+                return redirect('/')
         else:
             messages.info(request, 'Password not matching')
             return redirect('signup')
