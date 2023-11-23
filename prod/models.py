@@ -9,7 +9,7 @@ class Profile(models.Model):
     id_user = models.IntegerField()
     bio = models.TextField(blank=True)
     profileimg = models.ImageField(upload_to='profile_images', default='blank-profile-picture.png')
-    birthdate = models.DateField(blank=True, null=True)
-
+    birthday = models.CharField(max_length=8, blank=True)
+    
     def __str__(self):
         return self.user.username

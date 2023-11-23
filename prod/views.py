@@ -9,9 +9,38 @@ from django.contrib.auth.decorators import login_required
 def index(request):
     return render(request, "index.html")
 
+@login_required(login_url='signin')
 def logout(request):
     auth.logout(request)
     return redirect('/')
+
+@login_required(login_url='signin')
+def settings(request):
+    user_profile = Profile.objects.get(user=request.user)
+
+    if request.method == 'POST':
+        
+        if request.FILES.get('image') == None:
+            image = user_profile.profileimg
+            bio = request.POST['bio']
+            birthday = request.POST['birthday']
+
+            user_profile.profileimg = image
+            user_profile.bio = bio
+            user_profile.birthday = birthday
+            user_profile.save()
+        if request.FILES.get('image') != None:
+            image = request.FILES.get('image')
+            bio = request.POST['bio']
+            birthday = request.POST['birthday']
+
+            user_profile.profileimg = image
+            user_profile.bio = bio
+            user_profile.birthday = birthday
+            user_profile.save()
+        
+        return redirect('settings')
+    return render(request, 'settings.html', {'user_profile': user_profile})
 
 def signin(request):
     if request.method == 'POST':
@@ -53,8 +82,8 @@ def signup(request):
 
                 # create profile
                 user_loged = User.objects.get(username=username)
-                user_profile = Profile.objects.create(user=user_loged, id_user=user_loged.id)
-                user_profile.save()
+                users_profile = Profile.objects.create(user=user_loged, id_user=user_loged.id)
+                users_profile.save()
                 return redirect('/')
         else:
             messages.info(request, 'Password not matching')
