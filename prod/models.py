@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+import uuid
+from datetime import datetime
 
 # Create your models here.
 User = get_user_model()
@@ -13,3 +15,13 @@ class Profile(models.Model):
     
     def __str__(self):
         return self.user.username
+    
+class Post(models.Model):
+    id_post = models.UUIDField(primary_key=True, default=uuid.uuid4)
+    user = models.CharField(max_length = 100)
+    image = models.ImageField(upload_to='post_images')
+    caption = models.TextField()
+    create_at = models.DateTimeField(default=datetime.now)
+    likes = models.IntegerField(default=0)
+    def __str__(self):
+        return self.user
