@@ -14,6 +14,10 @@ def index(request):
     return render(request, "index.html", {'user_profile': profile, 'posts': post})
 
 @login_required(login_url='signin')
+def likes(request):
+    pass
+
+@login_required(login_url='signin')
 def logout(request):
     auth.logout(request)
     return redirect('/')
