@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search</title>
+</head>
+<body>
+    <form method="get" action="{% url 'search' %}">
+        <input type="text" name="search" placeholder="Search...">
+        <button type="submit">Search</button>
+    </form>
+    
+    {% for user in user_profiles %}
+        <a href="/profile/{{users.user}}" class="image" src = "{{users.profileimg.url}}"></a>
+        <h2><a href="/profile/{{users.user}}">{{ users.user }}</a></h2>
+        <p>{{ users.birthday }}</p>
+    {% endfor %}
+</body>
+</html>
