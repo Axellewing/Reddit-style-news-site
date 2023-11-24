@@ -32,6 +32,14 @@
 					<span ><b>{{user_len_post}} Posts</b></span>
 					{% endif %}
 
+					{% if user_followers == 0 or user_followers == 1 %}
+					<span ><b>{{user_followers}} follower</b></span>
+					{% else %}
+					<span ><b>{{user_followers}} followers</b></span>
+					{% endif %}
+
+
+					<span ><b>{{user_following}} following</b></span>
 
 					<input type="hidden" value="{{user.username}}" name="follower" />
 					<input type="hidden" value="{{user_object.username}}" name="user" />

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.models import User, auth
-from .models import Profile, Post, Like
+from .models import Profile, Post, Like, FollowerCount
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
@@ -40,17 +40,49 @@ def logout(request):
     return redirect('/')
 
 @login_required(login_url='signin')
+def follow(request):
+    if request.method == 'POST':
+        follower = request.POST['follower']
+        user = request.POST['user']
+        # print('follower: '+follower+' user: '+user)
+        user_follow = FollowerCount.objects.filter(user=user, follower=follower).first()
+
+        if user_follow is None:
+            new_follow = FollowerCount.objects.create(user=user, follower=follower)
+            new_follow.save()
+            return redirect('/profile/'+user)
+        else:
+            user_follow.delete()
+            return redirect('/profile/'+user)
+    else:
+        return redirect('/')
+
+@login_required(login_url='signin')
 def profile(request, username):
     user = User.objects.get(username=username)
     profile = Profile.objects.get(user=user)
     post = Post.objects.filter(user=username)
     len_post = len(post)
 
+    follower = request.user.username
+    user = username
+
+    if FollowerCount.objects.filter(user=user, follower=follower).first():
+        button_text = 'Unfollow'
+    else:
+        button_text = 'Follow'
+
+    user_followers = len(FollowerCount.objects.filter(user=user))
+    user_following = len(FollowerCount.objects.filter(follower=user))
+    
     context = {
         'user_profile': profile,
         'user_object': user,
         'user_posts': post,
-        'user_len_post': len_post
+        'user_len_post': len_post,
+        'button_text': button_text,
+        'user_followers': user_followers,
+        'user_following': user_following
     }
     return render(request, 'profile.html', context)
 
