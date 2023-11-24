@@ -7,12 +7,18 @@ from django.contrib.auth.decorators import login_required
 
 @login_required(login_url='signin')
 def index(request):
-    return render(request, "index.html")
+    user = User.objects.get(username=request.user.username)
+    profile = Profile.objects.get(user=user)
+    return render(request, "index.html", {'user_profile': profile})
 
 @login_required(login_url='signin')
 def logout(request):
     auth.logout(request)
     return redirect('/')
+
+@login_required(login_url='signin')
+def upload(request):
+    return HttpResponse('upload')
 
 @login_required(login_url='signin')
 def settings(request):
