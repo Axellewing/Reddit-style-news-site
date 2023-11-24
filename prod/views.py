@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.models import User, auth
-from .models import Profile, Post
+from .models import Profile, Post, Like
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
@@ -15,13 +15,33 @@ def index(request):
 
 @login_required(login_url='signin')
 def likes(request):
-    pass
+    user = request.user.username
+    id_post = request.GET.get('post_id')
+
+    post = Post.objects.get(id_post=id_post)
+
+    first_like = Like.objects.filter(id_post=id_post, user=user).first()
+
+    if first_like is None:
+        new_like = Like.objects.create(id_post=id_post, user=user)
+        new_like.save()
+        post.likes += 1
+        post.save()
+        return redirect('/')
+    else:
+        first_like.delete()
+        post.likes -= 1
+        post.save()
+        return redirect('/')        
 
 @login_required(login_url='signin')
 def logout(request):
     auth.logout(request)
     return redirect('/')
 
+@login_required(login_url='signin')
+def profile(request):
+    return render(request, 'profile.html')
 @login_required(login_url='signin')
 def upload(request):
     if request.method == 'POST':
