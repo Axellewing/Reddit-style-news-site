@@ -40,8 +40,20 @@ def logout(request):
     return redirect('/')
 
 @login_required(login_url='signin')
-def profile(request):
-    return render(request, 'profile.html')
+def profile(request, username):
+    user = User.objects.get(username=username)
+    profile = Profile.objects.get(user=user)
+    post = Post.objects.filter(user=username)
+    len_post = len(post)
+
+    context = {
+        'user_profile': profile,
+        'user_object': user,
+        'user_posts': post,
+        'user_len_post': len_post
+    }
+    return render(request, 'profile.html', context)
+
 @login_required(login_url='signin')
 def upload(request):
     if request.method == 'POST':
