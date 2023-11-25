@@ -1,27 +1,114 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css'%}">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/const.css' %}"> 
+</head>
+<body class="bg-dark text-white">
+
+    <div id ="fixed">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="index.html">TellIT</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <h3><b>log in</b></h3>
+      </div>
+    </nav>
+    </div>
+    
+    
+        <div class="container3">
+            <h2 class="my-4">Log in</h2>
+    
+            <!-- <div class="social-login">
+                <button class="btn btn-danger btn-block">Log in with Google</button>
+                <button class="btn btn-light btn-block">Log in with Apple</button>
+            </div> -->
+            
+            <div class="custom-signup mt-4">
+                <div>
+                    <style>
+                        h5{
+                            color: red;
+                        }
+                    </style>
+                    {% for message in messages %}
+                    <h5>{{message}}</h5>
+                    {% endfor %}
+                </div>
+                
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="username">Username*</label>
+                        <input type="text" name="username" placeholder="Username" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password*</label>
+                        <input type="password" name="password" placeholder="Password" class="form-control">
+                    </div>
+
+                        <button type="submit" class="btn btn-primary btn-block">Login</button>
+                    <div class="text-center mt-5 space-x-2">
+                        <p class="text-base"> Not registered? <a href="signup" class=""> Create a account </a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    </body>
+</html>
+
+
+<!-- 
+<!DOCTYPE html>
+<html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Sign In - TellIT</title>
     </head>
     <body>
-        <!-- header-->
-        <div class="bg-white py-4 shadow dark:bg-gray-800">
-            <div class="max-w-6xl mx-auto">
-
-
-                <div>
-                    <div>
-                        
-                        <a href="signup" class="bg-pink-500 pink-500 px-6 py-3 rounded-md shadow text-white">Register</a>
+        <header>
+            <div id ="fixed">
+                <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                    <a class="navbar-brand" href="/">TellIT</a>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <form  action="/search" method="POST" class="d-flex">
+                                {% csrf_token %}
+                                <input class="form-control me-2" name="search" type="search" placeholder="Search" aria-label="Search">&nbsp; &nbsp;
+                                <button class="btn btn-outline-success" type="submit">Search</button>
+                            </form>
+                        </li>
+                        </ul>
+                        <div class="container">
+                            <div class="dropdown float-right">
+                                <img src="{{user_profile.profileimg.url}}" class="log_user_img  dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="cursor: pointer;">
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="/profile/{{username}}">Profile</a>
+                                    <a class="dropdown-item" href="settings">Account setting</a>
+                                    <a class="dropdown-item" href="logout">Log Out</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                </nav>
             </div>
-        </div>
+        </header> 
 
-        <!-- Content-->
         <div>
             <div >
                 <h1 > Log in</h1>
@@ -55,4 +142,4 @@
         </div>
 
     </body>
-</html>
+</html> -->
