@@ -9,8 +9,25 @@
     </head>
     <body>
         <header>
-            <input type="text" name="username" placeholder="Search for username..">&nbsp; &nbsp;
-                            <button type="submit"><i class="fa fa-search fa-1x"></i></button>
+            
+            <form action="/search" method="POST">
+                {% csrf_token %}
+                <div class="left-side">
+                    <!-- Logo -->
+                    
+
+                    <!--<div class="triger" uk-toggle="target: #wrapper ; cls: sidebar-active">
+                        <i class="uil-bars"></i>
+                    </div>-->
+
+                    <!-- <div class="header_search"> -->
+                        <input type="text" name="search" placeholder="Search for username..">&nbsp; &nbsp;
+                        <button type="submit"><i class="fa fa-search fa-1x"></i></button>
+                    <!-- </div> -->
+
+                </div>
+            </form>
+            
             <div class="header_inner">                
                 
                     <a href="#">
