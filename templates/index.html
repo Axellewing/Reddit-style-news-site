@@ -43,15 +43,7 @@
         </header> 
         <main>
         <div class="containerr container-fluid">
-            <div class="left-panel bg-dark">
-                <div class="container">
-                    <ul class="list-group scrollable-list">
-                        <li class="zed list-group-item list-group-item-action list-group-item-dark"><a href="">Folowed</a></li>
-
-                    </ul>
-                </div>                        
-            </div>
-        <div class="center-panel ">
+        <div class=" container4">
             {% for post in posts %}
             <div class="containerz">
                 <ul class="list-group">
@@ -60,6 +52,7 @@
                         <div class="user-content">
                             <h5 class="mb-0"><a href="/profile/{{post.user}}">@{{post.user}}</a></h5>
                             <img src="{{post.image.url}}" class = "imgs">
+                            <br>
                             <h7 class="mb-1">{{post.caption}}</h7>
                             <div class="flex space-x-4 lg:font-bold">
                                 <a href="/likes?post_id={{post.id_post}}" class="flex items-center space-x-2">

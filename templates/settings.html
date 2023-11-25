@@ -12,7 +12,18 @@
 <body class="bg-dark text-white">
     <div class="container mt-5">
         <h2>Profile Settings</h2>
-        <form>
+        <div>
+            <style>
+                h5{
+                    color: red;
+                }
+            </style>
+            {% for message in messages %}
+            <h5>{{message}}</h5>
+            {% endfor %}
+        </div>
+        <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
           <!-- Profile Image Upload -->
           <div class="form-group">
             <label for="profileImage">Profile Image</label>
