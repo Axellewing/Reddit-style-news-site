@@ -23,6 +23,7 @@ class Post(models.Model):
     caption = models.TextField()
     create_at = models.DateTimeField(default=datetime.now)
     likes = models.IntegerField(default=0)
+    user_img = models.ImageField( default='blank-profile-picture.png')
     def __str__(self):
         return self.user
     

@@ -8,13 +8,14 @@ from itertools import chain
 
 @login_required(login_url='signin')
 def index(request):
-    user = User.objects.get(username=request.user.username)
+    username = request.user.username
+    user = User.objects.get(username=username)
     profile = Profile.objects.get(user=user)
 
     user_following_list = []
     feed = []
 
-    user_following = FollowerCount.objects.filter(follower=request.user.username)
+    user_following = FollowerCount.objects.filter(follower=username)
     for user in user_following:
         user_following_list.append(user.user)
 
@@ -25,7 +26,7 @@ def index(request):
     feed_list = list(chain(*feed))
 
     post = Post.objects.all()
-    return render(request, "index.html", {'user_profile': profile, 'posts': feed_list})
+    return render(request, "index.html", {'user_profile': profile, 'posts': feed_list, 'username': username})
 
 @login_required(login_url='signin')
 def likes(request):
@@ -97,8 +98,8 @@ def search(request):
 
 @login_required(login_url='signin')
 def profile(request, username):
-    user = User.objects.get(username=username)
-    profile = Profile.objects.get(user=user)
+    user_obj = User.objects.get(username=username)
+    profile = Profile.objects.get(user=user_obj)
     post = Post.objects.filter(user=username)
     len_post = len(post)
 
@@ -115,7 +116,7 @@ def profile(request, username):
     
     context = {
         'user_profile': profile,
-        'user_object': user,
+        'user_object': user_obj,
         'user_posts': post,
         'user_len_post': len_post,
         'button_text': button_text,
@@ -130,8 +131,9 @@ def upload(request):
         image = request.FILES.get('image_upload')
         caption = request.POST['caption']
         user = request.user.username
+        user_img = Profile.objects.get(user=User.objects.get(username=user)).profileimg
 
-        new_post = Post.objects.create(user=user, image=image, caption=caption)
+        new_post = Post.objects.create(user=user, image=image, caption=caption, user_img=user_img)
         new_post.save()
         return redirect('/')
     else:
@@ -140,6 +142,7 @@ def upload(request):
 @login_required(login_url='signin')
 def settings(request):
     user_profile = Profile.objects.get(user=request.user)
+    user_posts = Post.objects.filter(user=request.user.username)
 
     if request.method == 'POST':
         
@@ -148,10 +151,12 @@ def settings(request):
         
         elif request.FILES.get('image') != None:
             image = request.FILES.get('image')
-        
+        print(image)
         bio = request.POST['bio']
         birthday = request.POST['birthday']
-
+        for post in user_posts:
+            post.user_img = image
+            post.save()
         user_profile.profileimg = image
         user_profile.bio = bio
         user_profile.birthday = birthday
