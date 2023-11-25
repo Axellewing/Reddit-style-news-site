@@ -1,0 +1,134 @@
+#fixed{
+	width:100%;
+	position:fixed;
+	height: 2.5 em;
+	z-index:1000;
+}
+.containerr {
+	display:flex;
+    width: 100%;
+	padding-top:2.6em;
+    height: 100vh; 
+}
+
+.left-panel, .right-panel {
+    width: 20%;
+}
+.left-panel ul{
+	position:fixed;
+}
+
+.center-panel {
+    width: 60%;
+}
+
+
+.left-panel, .center-panel, .right-panel {
+    padding: 20px;
+    box-sizing: border-box;
+}
+.container {
+    max-width: 600px;
+    margin: auto;
+    background-color: #343a40; 
+    padding-top:1.5em;
+    border-radius: 10px; 
+}
+
+.list-group-item-dark {
+    background-color: #495057; 
+    color: white; 
+    border: none; 
+}
+
+.scrollable-list {
+    max-height: 560px; 
+    overflow-y: auto; 
+    scrollbar-width: thin; 
+    scrollbar-color: #888 #f1f1f1; 
+}
+
+
+.scrollable-list::-webkit-scrollbar {
+    width: 5px; 
+}
+
+.scrollable-list::-webkit-scrollbar-track {
+    background: #B3B6B7; 
+}
+
+.scrollable-list::-webkit-scrollbar-thumb {
+    background: #888; 
+}
+
+.scrollable-list::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+}
+.containerz {
+	width:100%;
+    margin: auto;
+    background-color: #343a40; 
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.list-group-item {
+    background-color: #495057; 
+    color: white; 
+    border: none; 
+	position: relative; 
+}
+.zed:hover {
+    background-color: #6c757d; 
+}
+.imgs {
+    max-width: 100%;
+    max-height: 500px;
+    object-fit: cover; 
+}
+
+
+
+.user-image {
+    width: 60px; 
+    height: 60px; 
+    border-radius: 50%; 
+    position: absolute; 
+    top: 10px; 
+    left: 10px; 
+}
+
+.user-content {
+    margin-left: 80px; 
+    padding-top: 10px; 
+}
+.community-item {
+    display: flex;
+    align-items: center;
+    background-color: #495057; 
+    color: white; 
+    padding: 10px;
+    border-radius: 5px; 
+    margin-bottom: 10px; 
+    border: none; 
+}
+
+.community-logo {
+    width: 50px; 
+    height: 50px; 
+    border-radius: 50%; 
+    margin-right: 15px; 
+}
+
+.community-info {
+    flex-grow: 1; 
+}
+
+.community-name {
+    margin-bottom: 5px; 
+}
+
+.community-members {
+    font-size: 0.9em;
+    color: #adb5bd; 
+}
