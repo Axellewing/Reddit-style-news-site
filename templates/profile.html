@@ -55,7 +55,7 @@
 					<div class="feature-photo">
 		
 								<img src="{{user_profile.profileimg.url}}" alt="Profile" class="profile-image">
-			
+							</div>
 							
 							<div class="user-info">
 								<form action="/follow" method="POST">
@@ -91,8 +91,9 @@
 				
 									</div>
 								</form>
-								<h1>{{user.username}}</h1>
-						</div>
+								</section>
+								<h1>@{{user.username}}</h1>
+						
 						<section>
 							<div class="bio">
 									{{user_profile.bio}}
@@ -114,14 +115,6 @@
 											</div>
 											
 				
-				
-				
-				
-				
-				
-				
-				
-				
 											<div class="col-lg-6">
 												<div class="central-meta">
 													<ul class="photos">
@@ -136,7 +129,7 @@
 														
 														
 													</ul>
-													<!-- <div class="lodmore"><button class="btn-view btn-load-more"></button></div> -->
+												
 												</div>
 											</div>
 											
@@ -146,151 +139,7 @@
 							</div>
 						</div>	
 					</section>
-        <!-- <header>
-            <div id ="fixed">
-                <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-                    <a class="navbar-brand" href="/">TellIT</a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                      </button>
-                    <div class="collapse navbar-collapse" id="navbarNav">
-                        <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <form  action="/search" method="POST" class="d-flex">
-                                {% csrf_token %}
-                                <input class="form-control me-2" name="search" type="search" placeholder="Search" aria-label="Search">&nbsp; &nbsp;
-                                <button class="btn btn-outline-success" type="submit">Search</button>
-                            </form>
-                        </li>
-                        </ul>
-                        <div class="container">
-                            <div class="dropdown float-right">
-                                <img src="{{user_profile.profileimg.url}}" class="log_user_img  dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="cursor: pointer;">
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="/profile/{{username}}">Profile</a>
-                                    <a class="dropdown-item" href="settings">Account setting</a>
-                                    <a class="dropdown-item" href="logout">Log Out</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </nav>
-            </div>
-        </header> 
-	
-	<section>
-			<div class="feature-photo">
-				<form action="/follow" method="POST">
-					{% csrf_token %}
-					<div class="add-btn">
-					<span ><b><u><a href="/">Home</a></u></b></span>
-					
-					{% if user_len_post == 0 %}
-					<span ><b>No Post</b></span>
-					{% elif user_len_post == 1 %}
-					<span ><b>{{user_len_post}} Post</b></span>
-					{% else %}
-					<span ><b>{{user_len_post}} Posts</b></span>
-					{% endif %}
-
-					{% if user_followers == 0 or user_followers == 1 %}
-					<span ><b>{{user_followers}} follower</b></span>
-					{% else %}
-					<span ><b>{{user_followers}} followers</b></span>
-					{% endif %}
-
-
-					<span ><b>{{user_following}} following</b></span>
-
-					<input type="hidden" value="{{user.username}}" name="follower" />
-					<input type="hidden" value="{{user_object.username}}" name="user" />
-
-					{% if user_object.username == user.username %}
-					<a href="/settings" data-ripple="">Account Settings</a>
-					{% else %}
-					<a data-ripple=""><button type="submit" >{{button_text}}</button></a>
-					{% endif %}
-
-					</div>
-				</form>
-
-				<div class="container-fluid">
-					<div class="row merged">
-						<div class="col-lg-2 col-sm-3">
-							<div class="user-avatar">
-								<figure>
-									<img src="{{user_profile.profileimg.url}}"  alt="">
-								</figure>
-							</div>
-						</div>
-						<div class="col-lg-10 col-sm-9">
-							<div class="timeline-info">
-								<ul>
-									<li class="admin-name">
-									  <h5 ><b>@{{user_profile.user.username}}</b></h5>
-
-									</li>
-								</ul>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			
-		</section>
-		<section>
-			<div class="bio">
-					{{user_profile.bio}}
-			</div>
-		</section>
-		
-	<section>
-		<div class="gap gray-bg">
-			<div class="container-fluid">
-				<div class="row">
-					<div class="col-lg-12">
-						<div class="row" id="page-contents">
-							<div class="col-lg-3">
-								<aside class="sidebar static">
-									
-									
-									
-								</aside>
-							</div>
-							
-
-
-
-
-
-
-
-
-
-							<div class="col-lg-6">
-								<div class="central-meta">
-									<ul class="photos">
-					
-										{% for post in user_posts %}
-										<li>
-											<a class="strip" href="{{post.image.url}}" title="" data-strip-group="mygroup" data-strip-group-options="loop: false">
-												<img src="{{post.image.url}}" style="height: 250px; width: 300px;" alt=""></a>
-										</li>
-										{% endfor %}
-										
-										
-										
-									</ul>
-									<div class="lodmore"><button class="btn-view btn-load-more"></button></div>
-								</div>
-							</div>
-							
-						</div>	
-					</div>
-				</div>
-			</div>
-		</div>	
-	</section>  -->
+        
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
