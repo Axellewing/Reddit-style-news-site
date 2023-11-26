@@ -3,6 +3,7 @@
 <html lang="en">
     <head> 
         <meta charset="UTF-8">
+        <link rel="icon" href="https://drive.google.com/file/d/1KqcGQTbY-RiCsaRtNDemCgVqVHTJ8P6a/view?usp=sharing" type="image/x-icon">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 		<link rel="stylesheet" href="{% static 'css/base.css' %}">      
@@ -123,7 +124,9 @@
 														<li>
 															<a class="strip" href="{{post.image.url}}" title="" data-strip-group="mygroup" data-strip-group-options="loop: false">
 																<img src="{{post.image.url}}" style="height: 250px; width: 300px;" alt=""></a>
-														</li>
+														
+															</li>
+															<a href="delete_post/{{post.id_post}}"></a>
 														{% endfor %}
 														
 														

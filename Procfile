@@ -1,0 +1,1 @@
+web gunicorn tellit.wsgi --log-file -
