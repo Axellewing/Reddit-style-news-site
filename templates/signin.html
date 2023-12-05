@@ -26,12 +26,6 @@
     
         <div class="container3">
             <h2 class="my-4">Log in</h2>
-    
-            <!-- <div class="social-login">
-                <button class="btn btn-danger btn-block">Log in with Google</button>
-                <button class="btn btn-light btn-block">Log in with Apple</button>
-            </div> -->
-            
             <div class="custom-signup mt-4">
                 <div>
                     <style>
@@ -69,77 +63,3 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     </body>
 </html>
-
-
-<!-- 
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Sign In - TellIT</title>
-    </head>
-    <body>
-        <header>
-            <div id ="fixed">
-                <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-                    <a class="navbar-brand" href="/">TellIT</a>
-                    <div class="collapse navbar-collapse" id="navbarNav">
-                        <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <form  action="/search" method="POST" class="d-flex">
-                                {% csrf_token %}
-                                <input class="form-control me-2" name="search" type="search" placeholder="Search" aria-label="Search">&nbsp; &nbsp;
-                                <button class="btn btn-outline-success" type="submit">Search</button>
-                            </form>
-                        </li>
-                        </ul>
-                        <div class="container">
-                            <div class="dropdown float-right">
-                                <img src="{{user_profile.profileimg.url}}" class="log_user_img  dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="cursor: pointer;">
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="/profile/{{username}}">Profile</a>
-                                    <a class="dropdown-item" href="settings">Account setting</a>
-                                    <a class="dropdown-item" href="logout">Log Out</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </nav>
-            </div>
-        </header> 
-
-        <div>
-            <div >
-                <h1 > Log in</h1>
-
-
-                <div>
-                    <style>
-                        h5{
-                            color: red;
-                        }
-                    </style>
-                    {% for message in messages %}
-                    <h5>{{message}}</h5>
-                    {% endfor %}
-                </div>
-
-
-                <form action="" method="POST">
-                    {% csrf_token %}
-                    <input type="text" name="username" placeholder="Username" style="border: 1px solid #d3d5d8 !important;">
-                    <input type="password" name="password" placeholder="Password" style="border: 1px solid #d3d5d8 !important;">
-                    <button type="submit" class="bg-gradient-to-br from-pink-500 py-3 rounded-md text-white text-xl to-red-400 w-full">Login</button>
-                    <div class="text-center mt-5 space-x-2">
-                        <p class="text-base"> Not registered? <a href="signup" class=""> Create a account </a></p>
-                    </div>
-                </form>
-
-
-
-            </div>
-        </div>
-
-    </body>
-</html> -->
