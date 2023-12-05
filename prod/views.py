@@ -97,12 +97,6 @@ def search(request):
     
 
 @login_required(login_url='signin')
-def delete_post(request, post_id):
-    post = Post.objects.get(id_post=post_id)
-    post.delete()
-    return redirect('/')
-
-@login_required(login_url='signin')
 def profile(request, username):
     user_obj = User.objects.get(username=username)
     profile = Profile.objects.get(user=user_obj)

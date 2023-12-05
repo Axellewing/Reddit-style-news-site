@@ -1,5 +1,8 @@
-from pathlib import Path
 import os
+import secrets
+from pathlib import Path
+
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -9,36 +12,52 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-y6on4&^y1+^c$5_h4eh-i2fz-c6jmagos9$5b!o!%8=08s#!tm'
+SECRET_KEY = os.environ.get(
+    "DJANGO_SECRET_KEY",
+    default=secrets.token_urlsafe(nbytes=64),
+)
+
+IS_HEROKU_APP = "DYNO" in os.environ and not "CI" in os.environ
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+if not IS_HEROKU_APP:
+    DEBUG = True
 
-ALLOWED_HOSTS = ['tellit.herokuapp.com', '127.0.0.1']
+if IS_HEROKU_APP:
+    ALLOWED_HOSTS = ["*"]
+else:
+    ALLOWED_HOSTS = []
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-
-    'prod'
+    # Use WhiteNoise's runserver implementation instead of the Django default, for dev-prod parity.
+    "whitenoise.runserver_nostatic",
+    # Uncomment this and the entry in `urls.py` if you wish to use the Django admin feature:
+    # https://docs.djangoproject.com/en/4.2/ref/contrib/admin/
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "prod",
 ]
 
 MIDDLEWARE = [
-    'whitenoise.middleware.WhiteNoiseMiddleware'
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    # Django doesn't support serving static assets in a production-ready way, so we use the
+    # excellent WhiteNoise package to do so instead. The WhiteNoise middleware must be listed
+    # after Django's `SecurityMiddleware` so that security redirects are still performed.
+    # See: https://whitenoise.readthedocs.io
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
 ROOT_URLCONF = 'tellit.urls'
@@ -65,16 +84,28 @@ WSGI_APPLICATION = 'tellit.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if IS_HEROKU_APP:
+    # In production on Heroku the database configuration is derived from the `DATABASE_URL`
+    # environment variable by the dj-database-url package. `DATABASE_URL` will be set
+    # automatically by Heroku when a database addon is attached to your Heroku app. See:
+    # https://devcenter.heroku.com/articles/provisioning-heroku-postgres
+    # https://github.com/jazzband/dj-database-url
+    DATABASES = {
+        "default": dj_database_url.config(
+            conn_max_age=600,
+            conn_health_checks=True,
+            ssl_require=True,
+        ),
     }
-}
-
-import dj_database_url  
-db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(db_from_env)
+else:
+    # When running locally in development or in CI, a sqlite database file will be used instead
+    # to simplify initial setup. Longer term it's recommended to use Postgres locally too.
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
 
 
 # Password validation
@@ -99,13 +130,11 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = "UTC"
 
 USE_I18N = True
-
-USE_L10N = True
 
 USE_TZ = True
 
