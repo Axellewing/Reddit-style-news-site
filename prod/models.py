@@ -11,7 +11,7 @@ class Profile(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     id_user = models.IntegerField()
     bio = models.TextField(blank=True)
-    profileimg = models.ImageField(upload_to='profile_images', default='s3://django-tutor-try/static/profile_post_images/blank-profile-picture.png')
+    profileimg = models.ImageField(upload_to='profile_images', default='profile_images/blank-profile-picture.png')
     birthday = models.CharField(max_length=8, blank=True)
     
     def __str__(self):
@@ -28,7 +28,7 @@ class Post(models.Model):
     caption = models.TextField()
     create_at = models.DateTimeField(default=datetime.now)
     likes = models.IntegerField(default=0)
-    user_img = models.ImageField(upload_to='profile_post_images', default='s3://django-tutor-try/static/profile_post_images/blank-profile-picture.png')
+    user_img = models.ImageField(upload_to='profile_post_images', default='profile_images/blank-profile-picture.png')
     def __str__(self):
         return self.user
     
