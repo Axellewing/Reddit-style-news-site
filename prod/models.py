@@ -16,10 +16,6 @@ class Profile(models.Model):
     
     def __str__(self):
         return self.user.username
-
-    def delete(self):
-        self.profileimg.delete()
-        super().delete()
     
 class Post(models.Model):
     id_post = models.UUIDField(primary_key=True, default=uuid.uuid4)
@@ -32,11 +28,6 @@ class Post(models.Model):
     def __str__(self):
         return self.user
     
-    def delete(self):
-        self.image.delete()
-        self.user_img.delete()
-        super().delete()
-    
 class Like(models.Model):
     id_post = models.CharField(max_length=500)
     user = models.CharField(max_length=100)
@@ -44,8 +35,6 @@ class Like(models.Model):
     def __str__(self):
         return self.user
     
-    def delete(self):
-        super().delete()
     
 class FollowerCount(models.Model):
     follower = models.CharField(max_length=100)
@@ -53,6 +42,3 @@ class FollowerCount(models.Model):
 
     def __str__(self):
         return self.user
-    
-    def delete(self):
-        super().delete()

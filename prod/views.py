@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from itertools import chain
 
+
 @login_required(login_url='signin')
 def index(request):
     username = request.user.username
@@ -93,8 +94,6 @@ def search(request):
         
         username_profile_list = list(chain(*username_profile_list))
     return render(request, 'search.html', {'user_profile': user_profile, 'username_profile_list': username_profile_list})
-
-    
 
 @login_required(login_url='signin')
 def profile(request, username):
@@ -213,3 +212,27 @@ def signup(request):
             return redirect('signup')
     else:
         return render(request, "signup.html")
+
+@login_required(login_url='signin')
+def delete_profile(request):
+    if request.method == 'POST':
+        username = request.user.username
+        user_object = User.objects.get(username=username)
+        user_profile = Profile.objects.get(user=user_object)
+        user_posts = Post.objects.filter(user=username)
+        users_likes = Like.objects.filter(user=user_object)
+        users_followers = FollowerCount.objects.filter(user=username)
+        users_following = FollowerCount.objects.filter(follower=username)
+        messages.info(request, 'delete profile')
+        for post in user_posts:
+            post.delete()
+        for like in users_likes:
+            like.delete()
+        for follower in users_followers:
+            follower.delete()
+        for following in users_following:
+            following.delete()
+        user_profile.delete()
+        user_object.delete()
+        return redirect('signin')
+    return render(request, 'delete_account.html')
