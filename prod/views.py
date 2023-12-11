@@ -30,6 +30,20 @@ def index(request):
     return render(request, "index.html", {'user_profile': profile, 'posts': feed_list, 'username': username})
 
 @login_required(login_url='signin')
+def post(request,id_post):
+    username = request.user.username
+    post = Post.objects.get(id_post=id_post, user=username)
+    user = User.objects.get(username=username)
+    profile = Profile.objects.get(user=user)
+
+    context = {
+        'post': post,
+        'user_profile': profile
+    }
+
+    return render(request, 'post.html', context)
+
+@login_required(login_url='signin')
 def likes(request):
     user = request.user.username
     id_post = request.GET.get('post_id')
@@ -236,3 +250,12 @@ def delete_profile(request):
         user_object.delete()
         return redirect('signin')
     return render(request, 'delete_account.html')
+
+@login_required(login_url='signin')
+def delete_post(request, id_post):
+    if request.method == 'POST':
+        username = request.user.username
+        post = Post.objects.get(id_post=id_post, user=username)
+        post.delete()
+        return redirect('/')
+    return render(request, 'delete_post.html')

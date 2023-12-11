@@ -55,8 +55,8 @@
                     <div class="col-md-9 col-md-pull-3">
                         
                         {% for users in username_profile_list %}
-                        <section class="search-result-item">
-                            <a class="image-link" href="/profile/{{users.user}}"><img class="image" src="{{users.profileimg.url}}">
+                        <section class="list-group-item d-flex align-items-center">
+                            <a class="image-link" href="/profile/{{users.user}}"><img class="log_user_img  image" src="{{users.profileimg.url}}">
                             </a>
                             <div class="search-result-item-body">
                                 <div class="row">

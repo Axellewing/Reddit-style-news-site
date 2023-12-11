@@ -6,11 +6,6 @@ from django.conf.urls.static import static
 import dj_database_url
 import environ
 
-env = environ.Env(
-    # set casting, default value
-    DEBUG=(bool, False)
-)
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -30,6 +25,11 @@ IS_HEROKU_APP = "DYNO" in os.environ and not "CI" in os.environ
 # SECURITY WARNING: don't run with debug turned on in production!
 if not IS_HEROKU_APP:
     DEBUG = True
+
+    env = environ.Env(
+        # set casting, default value
+        DEBUG=(bool, False)
+    )
 
 if IS_HEROKU_APP:
     ALLOWED_HOSTS = ["*"]
@@ -148,14 +148,22 @@ USE_I18N = True
 USE_TZ = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+if not IS_HEROKU_APP:
+    AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
 
-AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
+    AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
 
-AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
+    AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
 
-AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
+    AWS_S3_REGION_NAME = env('AWS_DEFAULT_REGION')
+else:
+    AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
 
-AWS_S3_REGION_NAME = env('AWS_DEFAULT_REGION')
+    AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+
+    AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
+
+    AWS_S3_REGION_NAME = os.environ.get('AWS_DEFAULT_REGION')
 
 AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
 

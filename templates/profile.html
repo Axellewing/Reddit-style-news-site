@@ -92,7 +92,7 @@
 									</div>
 								</form>
 								</section>
-								<h1>@{{user.username}}</h1>
+								<h1>@{{user_profile.user.username}}</h1>
 						
 						<section>
 							<div class="bio">
@@ -120,8 +120,8 @@
 													<ul class="photos">
 									
 														{% for post in user_posts %}
-														<li>
-															<a class="strip" href="{{post.image.url}}" title="" data-strip-group="mygroup" data-strip-group-options="loop: false">
+														<li class="list-group-item d-flex align-items-center">
+															<a class="strip" href="../post/{{post.id_post}}" title="" data-strip-group="mygroup" data-strip-group-options="loop: false">
 																<img src="{{post.image.url}}" style="height: 250px; width: 300px;" alt=""></a>
 														</li>
 														{% endfor %}
