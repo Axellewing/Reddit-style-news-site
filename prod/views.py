@@ -111,6 +111,8 @@ def search(request):
 
 @login_required(login_url='signin')
 def profile(request, username):
+    if username is None:
+        username = request.user.username
     user_obj = User.objects.get(username=username)
     profile = Profile.objects.get(user=user_obj)
     post = Post.objects.filter(user=username)
@@ -259,3 +261,8 @@ def delete_post(request, id_post):
         post.delete()
         return redirect('/')
     return render(request, 'delete_post.html')
+
+from django.http import HttpResponseNotFound
+
+def handler404(request):
+    return render(request, '404.html')
