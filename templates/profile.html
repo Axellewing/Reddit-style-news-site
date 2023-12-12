@@ -79,10 +79,10 @@
 				
 									<span ><b>{{user_following}} following</b></span>
 				
-									<input type="hidden" value="{{user.username}}" name="follower" />
+									<input type="hidden" value="{{login_user.username}}" name="follower" />
 									<input type="hidden" value="{{user_object.username}}" name="user" />
 				
-									{% if user_object.username == user.username %}
+									{% if user_object.username == login_user.username %}
 									<button class="follow-btn"><a href="/settings " data-ripple="">Account Settings</a></button>
 									<!-- <a href="/settings" data-ripple="">Account Settings</a> -->
 									{% else %}
@@ -121,8 +121,12 @@
 									
 														{% for post in user_posts %}
 														<li class="list-group-item d-flex align-items-center">
+															{% if user_object.username == login_user.username %}
 															<a class="strip" href="../post/{{post.id_post}}" title="" data-strip-group="mygroup" data-strip-group-options="loop: false">
 																<img src="{{post.image.url}}" style="height: 250px; width: 300px;" alt=""></a>
+															{% else %}
+															<img src="{{post.image.url}}" style="height: 250px; width: 300px;" alt="">
+															{% endif %}
 														</li>
 														{% endfor %}
 														
