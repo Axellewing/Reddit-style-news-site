@@ -190,7 +190,12 @@ def signin(request):
 
         if user is not None:
             auth.login(request, user)
-            return redirect('/')
+
+            response = redirect('/')
+
+            # response.set_cookie('username', username)
+            # response.set_cookie('login_status', True, max_age=60*60*24*30)
+            return response
         else:
             messages.info(request, 'Invalid credentials')
             return redirect('signin')

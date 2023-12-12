@@ -32,6 +32,10 @@ if not IS_HEROKU_APP:
     )
 
 if IS_HEROKU_APP:
+    SESSION_COOKIE_AGE = 86400
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+
     ALLOWED_HOSTS = ["*"]
 else:
     ALLOWED_HOSTS = []

@@ -15,5 +15,4 @@ urlpatterns = [
     path('delete_profile', views.delete_profile, name='delete_profile'),
     path('post/<uuid:id_post>', views.post, name='post'),
     path('delete_post/<uuid:id_post>', views.delete_post, name='delete_post'),
-    path('<path:path>', views.handler404),
 ]
