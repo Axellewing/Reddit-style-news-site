@@ -48,7 +48,7 @@ On this page, you can delete a user.
 
 On this page, you can delete posts.
 
-![App Screenshot](delete post in profile - tellit.png)
+![](/media/Screenshots_of_website/delete_post_in_profile_tellit.png)
 
 ### Error pages
 
