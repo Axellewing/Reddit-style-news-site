@@ -38,7 +38,7 @@ The search works on the principle of finding similar names among all users and t
 
 On these pages, you initialize the user in our system.
 
-![App Screenshot](login:logout - tellit.png)
+![](/media/Screenshots_of_website/login_logout_tellit.png)
 
 ### Delete
 
