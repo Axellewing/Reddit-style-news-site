@@ -32,7 +32,7 @@ On this page, you can customize the user's photo with their bio and write your b
 
 The search works on the principle of finding similar names among all users and then you will be presented with a page with all the possible options, where you can find your friends and subscribe to them to see updates from their life on the woof page.
 
-![](media/Screenshots_of_website/settings_tellit.png)
+![](media/Screenshots_of_website/search_tellit.png)
 
 ### SignIn/SignUp
 
