@@ -20,19 +20,19 @@ On the home page you can see `+`, this is a drop-down menu where you can add you
 
 Also on this page, you can see posts of users you are subscribed to.
 
-![App Screenshot](homepage - tellit.png)
+![](media/Screenshots_of_website/homepage_tellit.png)
 
 ### Settings
 
 On this page, you can customize the user's photo with their bio and write your birthday.
 
-![App Screenshot](settings - tellit.png)
+![](media/Screenshots_of_website/settings_tellit.png)
 
 ### Search
 
 The search works on the principle of finding similar names among all users and then you will be presented with a page with all the possible options, where you can find your friends and subscribe to them to see updates from their life on the woof page.
 
-![App Screenshot](search - tellit.png)
+![](media/Screenshots_of_website/settings_tellit.png)
 
 ### SignIn/SignUp
 
@@ -44,7 +44,7 @@ On these pages, you initialize the user in our system.
 
 On this page, you can delete a user.
 
-![App Screenshot](delete profile - tellit.png)
+![](media/Screenshots_of_website/delete_profile_tellit.png)
 
 On this page, you can delete posts.
 
@@ -54,7 +54,7 @@ On this page, you can delete posts.
 
 For errors on the server side or errors during routing, I decided to implement a mini-game the result in this game is not, but you can try to set a record and put it in our social network. To return you need to click `Go back`.
 
-![App Screenshot](error page - tellit.png)
+![](media/Screenshots_of_website/error_page_tellit.png)
 
 #### Future Features 
 
