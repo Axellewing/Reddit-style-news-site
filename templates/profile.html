@@ -29,7 +29,7 @@
 									</form>
 								</li>
 								</ul>
-								<div class="container">
+								<!-- <div class="container">
 									<div class="dropdown float-right">
 										<img src="{{user_profile.profileimg.url}}" class="log_user_img dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="cursor: pointer;">
 										<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -38,7 +38,7 @@
 											<a class="dropdown-item" href="logout">Log Out</a>
 										</div>
 									</div>
-								</div>
+								</div> -->
 							</div>
 						</nav>
 					</div>
@@ -79,10 +79,10 @@
 				
 									<span ><b>{{user_following}} following</b></span>
 				
-									<input type="hidden" value="{{user.username}}" name="follower" />
+									<input type="hidden" value="{{login_user.username}}" name="follower" />
 									<input type="hidden" value="{{user_object.username}}" name="user" />
 				
-									{% if user_object.username == user.username %}
+									{% if user_object.username == login_user.username %}
 									<button class="follow-btn"><a href="/settings " data-ripple="">Account Settings</a></button>
 									<!-- <a href="/settings" data-ripple="">Account Settings</a> -->
 									{% else %}
@@ -92,7 +92,7 @@
 									</div>
 								</form>
 								</section>
-								<h1>@{{user.username}}</h1>
+								<h1>@{{user_profile.user.username}}</h1>
 						
 						<section>
 							<div class="bio">
@@ -120,9 +120,13 @@
 													<ul class="photos">
 									
 														{% for post in user_posts %}
-														<li>
-															<a class="strip" href="{{post.image.url}}" title="" data-strip-group="mygroup" data-strip-group-options="loop: false">
+														<li class="list-group-item d-flex align-items-center">
+															{% if user_object.username == login_user.username %}
+															<a class="strip" href="../post/{{post.id_post}}" title="" data-strip-group="mygroup" data-strip-group-options="loop: false">
 																<img src="{{post.image.url}}" style="height: 250px; width: 300px;" alt=""></a>
+															{% else %}
+															<img src="{{post.image.url}}" style="height: 250px; width: 300px;" alt="">
+															{% endif %}
 														</li>
 														{% endfor %}
 														

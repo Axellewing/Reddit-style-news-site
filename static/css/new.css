@@ -1,0 +1,103 @@
+
+#fixed{
+	width:100%;
+	position:fixed;
+	height: 2.5 em;	
+	z-index:1000;
+}
+
+.profile-header {
+    text-align: right;
+    color: white;
+}
+.profile-container{
+	padding-top:9em;
+}
+#desctext{
+padding-left:30%;
+}
+.background-image {
+
+    width: 40%;
+    max-height: 30em;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.profile-info {
+padding-right:10em;
+    display: flex;
+}
+.profile-image {
+    max-width: 15em;
+    max-height: 15em;
+    margin-top: -4em;
+	margin-left:4em;
+    border: 3px solid white; 
+}
+.user-info {
+float:right;
+}
+
+.user-info h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.user-info p {
+    font-size: 16px; 
+}
+
+.stats {
+    display: flex;
+    justify-content: space-around;
+    width: 30%;
+    margin-top: 10px;
+}
+
+.stats span {
+    margin: 0 10px;
+}
+
+.follow-btn {
+    padding: 10px 20px;
+    background-color: orange;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+}
+.user-image {
+    width: 60px; 
+    height: 60px; 
+    border-radius: 50%; 
+	float:left;
+}
+
+.custom-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.custom-list li {
+		padding-left: 30%;
+	padding-right: 30%;
+    display: flex;
+    align-items: center; 
+    margin-bottom: 10px; 
+}
+
+.like-icon {
+    margin-right: 10px; 
+}
+
+.description {
+    flex-grow: 1; 
+    text-align: center; 
+}
+
+.right-button {
+    margin-left: 10px; 
+}

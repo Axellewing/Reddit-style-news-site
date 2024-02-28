@@ -6,9 +6,12 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from itertools import chain
 
-@login_required(login_url='signin')
+
+# @login_required(login_url='signin')
 def index(request):
-    username = request.user.username
+    if 'login_status' not in request.COOKIES:
+        return redirect('signin')
+    username = request.COOKIES['username']
     user = User.objects.get(username=username)
     profile = Profile.objects.get(user=user)
 
@@ -28,9 +31,27 @@ def index(request):
     post = Post.objects.all()
     return render(request, "index.html", {'user_profile': profile, 'posts': feed_list, 'username': username})
 
-@login_required(login_url='signin')
+# @login_required(login_url='signin')
+def post(request,id_post):
+    if 'login_status' not in request.COOKIES:
+        return redirect('signin')
+    username = request.COOKIES['username']
+    post = Post.objects.get(id_post=id_post, user=username)
+    user = User.objects.get(username=username)
+    profile = Profile.objects.get(user=user)
+
+    context = {
+        'post': post,
+        'user_profile': profile
+    }
+
+    return render(request, 'post.html', context)
+
+# @login_required(login_url='signin')
 def likes(request):
-    user = request.user.username
+    if 'login_status' not in request.COOKIES:
+        return redirect('signin')
+    user = request.COOKIES['username']
     id_post = request.GET.get('post_id')
 
     post = Post.objects.get(id_post=id_post)
@@ -49,13 +70,20 @@ def likes(request):
         post.save()
         return redirect('/')        
 
-@login_required(login_url='signin')
+# @login_required(login_url='signin')
 def logout(request):
+    if 'login_status' not in request.COOKIES:
+        return redirect('signin')
+    response = redirect('signin')
+    response.delete_cookie('username')
+    response.delete_cookie('login_status')
     auth.logout(request)
-    return redirect('/')
+    return response
 
-@login_required(login_url='signin')
+# @login_required(login_url='signin')
 def follow(request):
+    if 'login_status' not in request.COOKIES:
+        return redirect('signin')
     if request.method == 'POST':
         follower = request.POST['follower']
         user = request.POST['user']
@@ -72,9 +100,11 @@ def follow(request):
     else:
         return redirect('/')
 
-@login_required(login_url='signin')
+# @login_required(login_url='signin')
 def search(request):
-    user_object = User.objects.get(username=request.user.username)
+    if 'login_status' not in request.COOKIES:
+        return redirect('signin')
+    user_object = User.objects.get(username=request.COOKIES['username'])
     user_profile = Profile.objects.get(user=user_object)
 
     if request.method == 'POST':
@@ -85,7 +115,8 @@ def search(request):
         username_profile_list = []
 
         for users in username_object:
-            username_profile.append(users.id)
+            if users != user_object:
+                username_profile.append(users.id)
 
         for ids in username_profile:
             profile_lists = Profile.objects.filter(id_user=ids)
@@ -94,10 +125,13 @@ def search(request):
         username_profile_list = list(chain(*username_profile_list))
     return render(request, 'search.html', {'user_profile': user_profile, 'username_profile_list': username_profile_list})
 
-    
-
-@login_required(login_url='signin')
+# @login_required(login_url='signin')
 def profile(request, username):
+    if 'login_status' not in request.COOKIES:
+        return redirect('signin')
+    if username is None:
+        username = request.user.username
+    login_user = User.objects.get(username=request.COOKIES['username'])
     user_obj = User.objects.get(username=username)
     profile = Profile.objects.get(user=user_obj)
     post = Post.objects.filter(user=username)
@@ -116,6 +150,7 @@ def profile(request, username):
     
     context = {
         'user_profile': profile,
+        'login_user': login_user,
         'user_object': user_obj,
         'user_posts': post,
         'user_len_post': len_post,
@@ -125,12 +160,14 @@ def profile(request, username):
     }
     return render(request, 'profile.html', context)
 
-@login_required(login_url='signin')
+# @login_required(login_url='signin')
 def upload(request):
+    if 'login_status' not in request.COOKIES:
+        return redirect('signin')
     if request.method == 'POST':
         image = request.FILES.get('image_upload')
         caption = request.POST['caption']
-        user = request.user.username
+        user = request.COOKIES['username']
         user_img = Profile.objects.get(user=User.objects.get(username=user)).profileimg
 
         new_post = Post.objects.create(user=user, image=image, caption=caption, user_img=user_img)
@@ -139,10 +176,13 @@ def upload(request):
     else:
         return render('/')
 
-@login_required(login_url='signin')
+# @login_required(login_url='signin')
 def settings(request):
-    user_profile = Profile.objects.get(user=request.user)
-    user_posts = Post.objects.filter(user=request.user.username)
+    if 'login_status' not in request.COOKIES:
+        return redirect('signin')
+    user_object = User.objects.get(username=request.COOKIES['username'])
+    user_profile = Profile.objects.get(user=user_object)
+    user_posts = Post.objects.filter(user=request.COOKIES['username'])
 
     if request.method == 'POST':
         
@@ -162,10 +202,12 @@ def settings(request):
         user_profile.birthday = birthday
         user_profile.save()
         
-        return redirect('settings')
+        return redirect('profile/'+request.COOKIES['username'])
     return render(request, 'settings.html', {'user_profile': user_profile})
 
 def signin(request):
+    if 'login_status' in request.COOKIES:
+        return redirect('/')
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -175,7 +217,12 @@ def signin(request):
 
         if user is not None:
             auth.login(request, user)
-            return redirect('/')
+
+            response = redirect('/')
+
+            response.set_cookie('username', username, secure=True)
+            response.set_cookie('login_status', True, max_age=60*60*24*30)
+            return response
         else:
             messages.info(request, 'Invalid credentials')
             return redirect('signin')
@@ -183,6 +230,8 @@ def signin(request):
         return render(request, "signin.html")
 
 def signup(request):
+    if 'login_status' in request.COOKIES:
+        return redirect('/')
     if request.method == 'POST':
         username = request.POST['username']
         email = request.POST['email']
@@ -202,14 +251,58 @@ def signup(request):
                 # lodin after signup
                 user = auth.authenticate(username=username, password=password)
                 auth.login(request, user)
+                response = redirect('/') 
 
                 # create profile
                 user_loged = User.objects.get(username=username)
                 users_profile = Profile.objects.create(user=user_loged, id_user=user_loged.id)
                 users_profile.save()
-                return redirect('/')
+                response.set_cookie('username', username)
+                response.set_cookie('login_status', True, max_age=60*60*24*30)
+                return response
+                # return redirect('/')
         else:
             messages.info(request, 'Password not matching')
             return redirect('signup')
     else:
         return render(request, "signup.html")
+
+# @login_required(login_url='signin')
+def delete_profile(request):
+    if 'login_status' not in request.COOKIES:
+        return redirect('signin')
+    if request.method == 'POST':
+        username = request.COOKIES['username']
+        user_object = User.objects.get(username=username)
+        user_profile = Profile.objects.get(user=user_object)
+        user_posts = Post.objects.filter(user=username)
+        users_likes = Like.objects.filter(user=user_object)
+        users_followers = FollowerCount.objects.filter(user=username)
+        users_following = FollowerCount.objects.filter(follower=username)
+        messages.info(request, 'delete profile')
+        for post in user_posts:
+            post.delete()
+        for like in users_likes:
+            like.delete()
+        for follower in users_followers:
+            follower.delete()
+        for following in users_following:
+            following.delete()
+        user_profile.delete()
+        user_object.delete()
+        response = redirect('signin')
+        response.delete_cookie('username')
+        response.delete_cookie('login_status')
+        return response
+    return render(request, 'delete_account.html')
+
+# @login_required(login_url='signin')
+def delete_post(request, id_post):
+    if 'login_status' not in request.COOKIES:
+        return redirect('signin')
+    if request.method == 'POST':
+        username = request.COOKIES['username']
+        post = Post.objects.get(id_post=id_post, user=username)
+        post.delete()
+        return redirect('/')
+    return render(request, 'delete_post.html')

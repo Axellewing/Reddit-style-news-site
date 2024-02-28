@@ -31,7 +31,7 @@
                             <div class="dropdown float-right">
                                 <img src="{{user_profile.profileimg.url}}" class="log_user_img  dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="cursor: pointer;">
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="/profile/{{username}}">Profile</a>
+                                    <a class="dropdown-item" href="profile/{{username}}">Profile</a>
                                     <a class="dropdown-item" href="settings">Account setting</a>
                                     <a class="dropdown-item" href="logout">Log Out</a>
                                 </div>
@@ -42,8 +42,26 @@
             </div>
         </header> 
         <main>
+            
         <div class="containerr container-fluid">
         <div class=" container4">
+                <div class="dropdown containerz">
+                    <svg width="50" height="50" viewBox="0 0 50 50" class="log_user_img  dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="cursor: pointer;">
+                        <path d="M25,5 L25,45 M5,25 L45,25" stroke="black" stroke-width="5" />
+                    </svg>                    
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <form action="upload" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <p class="my-3 leading-6">Upload pics</p>
+                            <div>
+                              <input type="file" name="image_upload">
+                              <textarea class="button soft-warning small" name="caption" placeholder="caption..."></textarea>
+                              <br>
+                              <button class="button bg-blue-700" type="submit">Upload</button>
+                            </div>
+                          </form>
+                    </div>
+                </div>
             {% for post in posts %}
             <div class="containerz">
                 <ul class="list-group">
