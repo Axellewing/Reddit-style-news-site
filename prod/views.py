@@ -5,7 +5,7 @@ from .models import Profile, Post, Like, FollowerCount
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from itertools import chain
-
+from django.urls import reverse
 
 # @login_required(login_url='signin')
 def index(request):
@@ -294,7 +294,10 @@ def delete_profile(request):
         response.delete_cookie('username')
         response.delete_cookie('login_status')
         return response
-    return render(request, 'delete_account.html')
+    return render(request, 'confirm_delete.html', {
+        'object_type': 'profile',
+        'cancel_url': reverse('settings'),  
+    })
 
 # @login_required(login_url='signin')
 def delete_post(request, id_post):
@@ -305,4 +308,7 @@ def delete_post(request, id_post):
         post = Post.objects.get(id_post=id_post, user=username)
         post.delete()
         return redirect('/')
-    return render(request, 'delete_post.html')
+    return render(request, 'confirm_delete.html', {
+        'object_type': 'post',
+        'cancel_url': '../', 
+    })

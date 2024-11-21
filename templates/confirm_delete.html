@@ -5,22 +5,19 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-		<link rel="stylesheet" href="{% static 'css/base.css' %}">      
+        <link rel="stylesheet" href="{% static 'css/base.css' %}">      
         <link rel="stylesheet" href="{% static 'css/const.css' %}">     
-        <title>TellIT</title>
+        <title>Confirm Deletion</title>
     </head>
     <body class="bg-dark text-white">
         <section class="list-group-item d-flex align-items-center containerz">
             <form method="post" autocomplete="off">
-            {% csrf_token %}
-
-            <h2>Confirm your choice</h2>
-            <p>Are you sure you want to delete your account? This action cannot be cancelled.</p>
-            <input type="submit" class="btn btn-danger" value="Delete forever">
-            <a href="{% url 'index'%}">Go back</a>
-        </form>
+                {% csrf_token %}
+                <h2>Confirm your choice</h2>
+                <p>Are you sure you want to delete this {{ object_type }}? This action cannot be undone.</p>
+                <input type="submit" class="btn btn-danger" value="Delete forever">
+                <a href="{{ cancel_url }}" class="btn btn-secondary">Go back</a>
+            </form>
         </section>
-        
     </body>
-    
 </html>
