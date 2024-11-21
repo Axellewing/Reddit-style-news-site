@@ -29,7 +29,7 @@ def index(request):
     feed_list = list(chain(*feed))
 
     post = Post.objects.all()
-    return render(request, "index.html", {'user_profile': profile, 'posts': feed_list, 'username': username})
+    return render(request, "base.html", {'user_profile': profile, 'posts': feed_list, 'username': username})
 
 # @login_required(login_url='signin')
 def post(request,id_post):
