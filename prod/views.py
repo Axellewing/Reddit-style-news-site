@@ -272,28 +272,32 @@ def delete_profile(request):
     if 'login_status' not in request.COOKIES:
         return redirect('signin')
     if request.method == 'POST':
-        username = request.COOKIES['username']
-        user_object = User.objects.get(username=username)
-        user_profile = Profile.objects.get(user=user_object)
-        user_posts = Post.objects.filter(user=username)
-        users_likes = Like.objects.filter(user=user_object)
-        users_followers = FollowerCount.objects.filter(user=username)
-        users_following = FollowerCount.objects.filter(follower=username)
-        messages.info(request, 'delete profile')
-        for post in user_posts:
-            post.delete()
-        for like in users_likes:
-            like.delete()
-        for follower in users_followers:
-            follower.delete()
-        for following in users_following:
-            following.delete()
-        user_profile.delete()
-        user_object.delete()
-        response = redirect('signin')
-        response.delete_cookie('username')
-        response.delete_cookie('login_status')
-        return response
+        try:
+            username = request.COOKIES['username']
+            user_object = User.objects.get(username=username)
+            user_profile = Profile.objects.get(user=user_object)
+            user_posts = Post.objects.filter(user=username)
+            users_likes = Like.objects.filter(user=user_object)
+            users_followers = FollowerCount.objects.filter(user=username)
+            users_following = FollowerCount.objects.filter(follower=username)
+            for post in user_posts:
+                post.delete()
+            for like in users_likes:
+                like.delete()
+            for follower in users_followers:
+                follower.delete()
+            for following in users_following:
+                following.delete()
+            user_profile.delete()
+            user_object.delete()
+            response = redirect('signin')
+            response.delete_cookie('username')
+            response.delete_cookie('login_status')
+            messages.success(request, 'delete profile')
+            return response
+        except Exception as e:
+            messages.error(request, 'An error occurred while performing the delete account operation.')
+            return redirect('/')
     return render(request, 'confirm_delete.html', {
         'object_type': 'profile',
         'cancel_url': reverse('settings'),  
@@ -307,6 +311,7 @@ def delete_post(request, id_post):
         username = request.COOKIES['username']
         post = Post.objects.get(id_post=id_post, user=username)
         post.delete()
+        messages.success(request, 'delete post')
         return redirect('/')
     return render(request, 'confirm_delete.html', {
         'object_type': 'post',
