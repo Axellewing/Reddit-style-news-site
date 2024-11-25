@@ -6,6 +6,8 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from itertools import chain
 from django.urls import reverse
+from django.contrib.messages import get_messages
+import json
 
 # @login_required(login_url='signin')
 def index(request):
@@ -298,9 +300,15 @@ def delete_profile(request):
         except Exception as e:
             messages.error(request, 'An error occurred while performing the delete account operation.')
             return redirect('/')
+    storage = get_messages(request)
+    messages_list = [{'level': message.tags, 'text': message.message} for message in storage]
+    messages_json = json.dumps(messages_list)
+
+    # return render(request, 'delete_account.html', {'messages_json': messages_json})
     return render(request, 'confirm_delete.html', {
         'object_type': 'profile',
-        'cancel_url': reverse('settings'),  
+        'cancel_url': reverse('settings'), 
+        'messages_json': messages_json 
     })
 
 # @login_required(login_url='signin')

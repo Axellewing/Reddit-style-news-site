@@ -1,21 +1,57 @@
-<!-- Popup message -->
+<!-- Popup Message Modal -->
 <div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="messageModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header {% if message.tags == 'error' %}bg-danger{% elif message.tags == 'success' %}bg-success{% else %}bg-info{% endif %}">
-          <h5 class="modal-title" id="messageModalLabel">Уведомление</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Закрыть">
-            <span aria-hidden="true" style="color: #fff;">&times;</span>
-          </button>
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header 
+                {% if message.tags == 'error' %}
+                    bg-danger text-white
+                {% elif message.tags == 'success' %}
+                    bg-success text-white
+                {% else %}
+                    bg-info text-white
+                {% endif %}">
+                <h5 class="modal-title" id="messageModalLabel">
+                    {% if message.tags == 'error' %}
+                        ❌ Error
+                    {% elif message.tags == 'success' %}
+                        ✅ Success
+                    {% else %}
+                        ℹ️ Information
+                    {% endif %}
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" style="color: #fff;">&times;</span>
+                </button>
+            </div>
+            
+            <!-- Modal Body -->
+            <div class="modal-body">
+                {% for message in messages %}
+                    <p class="
+                        {% if message.tags == 'error' %}
+                            text-danger
+                        {% elif message.tags == 'success' %}
+                            text-success
+                        {% else %}
+                            text-info
+                        {% endif %}
+                    ">{{ message }}</p>
+                {% endfor %}
+            </div>
+            
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn 
+                    {% if message.tags == 'error' %}
+                        btn-danger
+                    {% elif message.tags == 'success' %}
+                        btn-success
+                    {% else %}
+                        btn-info
+                    {% endif %}
+                " data-dismiss="modal">Close</button>
+            </div>
         </div>
-        <div class="modal-body">
-          {% for message in messages %}
-            <p>{{ message }}</p>
-          {% endfor %}
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
-        </div>
-      </div>
     </div>
 </div>
