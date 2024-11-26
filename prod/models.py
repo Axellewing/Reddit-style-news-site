@@ -12,7 +12,7 @@ class Profile(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     id_user = models.IntegerField()
     bio = models.TextField(blank=True)
-    profileimg = models.ImageField(upload_to='profile_images', default=f'{settings.MEDIA_URL}profile_images/blank-profile-picture.png')
+    profileimg = models.ImageField(upload_to='profile_images', default=f'{settings.MEDIA_URL}/profile_images/blank-profile-picture.png')
     birthday = models.CharField(max_length=8, blank=True)
 
     def str(self):
