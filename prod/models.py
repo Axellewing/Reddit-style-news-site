@@ -13,10 +13,9 @@ class Profile(models.Model):
     id_user = models.IntegerField()
     bio = models.TextField(blank=True)
     profileimg = models.ImageField(upload_to='profile_images', default='profile_images/blank-profile-picture.png')
-    backgroundimg = models.ImageField(upload_to='background-img', default='background-img/img1.jpg')
     birthday = models.CharField(max_length=8, blank=True)
-
-    def str(self):
+    
+    def __str__(self):
         return self.user.username
     
 class Post(models.Model):
