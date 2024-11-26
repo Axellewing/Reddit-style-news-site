@@ -169,7 +169,8 @@ else:
 
     AWS_S3_REGION_NAME = os.environ.get('AWS_DEFAULT_REGION')
 
-AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com'
+
 
 AWS_DEFAULT_ACL =  'public-read'
 
