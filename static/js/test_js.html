@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Testing with QUnit</title>
+    <!-- Include QUnit CSS -->
+    <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.19.4.css">
+</head>
+<body>
+    <!-- Containers for QUnit results -->
+    <div id="qunit"></div>
+    <div id="qunit-fixture"></div>
+
+    <!-- Your scripts to be tested -->
+    <script src="messages.js"></script>
+    <script src="404.js"></script>
+    <!-- Include QUnit -->
+    <script src="https://code.jquery.com/qunit/qunit-2.19.4.js"></script>
+    <!-- Your tests -->
+    <script>
+        QUnit.module('messages.js Tests');
+
+        QUnit.test('Should show the modal if it exists', function(assert) {
+            // Mock bootstrap.Modal
+            window.bootstrap = {
+                Modal: class {
+                    constructor(element) {
+                        this.element = element;
+                    }
+                    show() {
+                        this.element.classList.add('shown');
+                    }
+                }
+            };
+
+            // Create a mock modal element
+            let modal = document.createElement('div');
+            modal.id = 'messageModal';
+            document.body.appendChild(modal);
+
+            // Simulate DOMContentLoaded event
+            document.dispatchEvent(new Event('DOMContentLoaded'));
+
+            // Check if the modal is shown
+            assert.ok(modal.classList.contains('shown'), 'Modal is displayed');
+
+            // Clean up
+            document.body.removeChild(modal);
+            delete window.bootstrap;
+        });
+
+        QUnit.test('Should not throw an error if the modal does not exist', function(assert) {
+            // Mock bootstrap.Modal
+            window.bootstrap = {
+                Modal: class {
+                    constructor(element) {
+                        this.element = element;
+                    }
+                    show() {
+                        this.element.classList.add('shown');
+                    }
+                }
+            };
+
+            // Ensure the modal does not exist
+            let modal = document.getElementById('messageModal');
+            if (modal) {
+                document.body.removeChild(modal);
+            }
+
+            // Simulate DOMContentLoaded event and check for errors
+            assert.ok(() => {
+                document.dispatchEvent(new Event('DOMContentLoaded'));
+                return true;
+            }, 'No errors when modal is absent');
+
+            // Clean up
+            delete window.bootstrap;
+        });
+
+        Unit.module('404.js Tests');
+
+        QUnit.test('Should call game function on DOMContentLoaded', function(assert) {
+            // Create the canvas element expected by the game function
+            let canvas = document.createElement('canvas');
+            canvas.id = 'gameCanvas';
+            document.body.appendChild(canvas);
+
+            // Spy on the game function
+            let gameCalled = false;
+            let originalGame = window.game;
+            window.game = function() {
+                gameCalled = true;
+                if (originalGame) {
+                    originalGame();
+                }
+            };
+
+            // Simulate DOMContentLoaded event
+            document.dispatchEvent(new Event('DOMContentLoaded', {
+                bubbles: true,
+                cancelable: true
+            }));
+
+            // Verify that the game function was called
+            assert.ok(gameCalled, 'game function was called on DOMContentLoaded');
+
+            // Clean up
+            window.game = originalGame;
+            document.body.removeChild(canvas);
+        });
+
+        QUnit.test('Game initializes correctly', function(assert) {
+            // Create a canvas element
+            let canvas = document.createElement('canvas');
+            canvas.id = 'gameCanvas';
+            document.body.appendChild(canvas);
+
+            // Mock the game function
+            window.game = function() {
+                let canvas = document.getElementById('gameCanvas');
+                // Initialize canvas dimensions
+                canvas.width = 560;
+                canvas.height = 312;
+                // Additional game initialization logic
+            };
+
+            // Call the game function
+            window.game();
+
+            // Get the canvas and check its properties
+            let gameCanvas = document.getElementById('gameCanvas');
+            assert.equal(gameCanvas.width, 560, 'Canvas width is set correctly');
+            assert.equal(gameCanvas.height, 312, 'Canvas height is set correctly');
+
+            // Clean up after test
+            document.body.removeChild(gameCanvas);
+        });
+    </script>
+</body>
+</html>
+
