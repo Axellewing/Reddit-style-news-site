@@ -108,9 +108,11 @@ def follow(request):
             if user_follow is None:
                 new_follow = FollowerCount.objects.create(user=user, follower=follower)
                 new_follow.save()
+                messages.success(request, 'Followed')
                 return redirect('/profile/'+user)
             else:
                 user_follow.delete()
+                messages.success(request, 'Unfollowed')
                 return redirect('/profile/'+user)
         else:
             return redirect('/')
@@ -199,6 +201,7 @@ def upload(request):
 
             new_post = Post.objects.create(user=user, image=image, caption=caption, user_img=user_img)
             new_post.save()
+            messages.success(request, 'Post uploaded successfully')
             return redirect('/')
         except Exception as e:
             messages.error(request, f'An error occurred while performing the upload operation. Error: {e}')
@@ -232,7 +235,7 @@ def settings(request):
             user_profile.bio = bio
             user_profile.birthday = birthday
             user_profile.save()
-            
+            messages.success(request, 'Profile updated successfully')
             return redirect('profile/'+request.COOKIES['username'])
         return render(request, 'settings.html', {'user_profile': user_profile})
     except Exception as e:
@@ -257,6 +260,7 @@ def signin(request):
 
                 response.set_cookie('username', username, secure=True)
                 response.set_cookie('login_status', True, max_age=60*60*24*30)
+                messages.success(request, 'Login successfully')
                 return response
             else:
                 messages.info(request, 'Invalid credentials')
@@ -286,7 +290,7 @@ def signup(request):
                 else:
                     user = User.objects.create_user(username=username, email=email, password=password)
                     user.save()
-
+                    messages.success(request, 'Account created successfully')
                     # lodin after signup
                     user = auth.authenticate(username=username, password=password)
                     auth.login(request, user)
@@ -335,7 +339,7 @@ def delete_profile(request):
             response = redirect('signin')
             response.delete_cookie('username')
             response.delete_cookie('login_status')
-            messages.success(request, 'delete profile')
+            messages.success(request, 'Delete profile successfully')
             return response
         except Exception as e:
             messages.error(request, f'An error occurred while performing the delete account operation. Error: {e}')
@@ -360,7 +364,7 @@ def delete_post(request, id_post):
             username = request.COOKIES['username']
             post = Post.objects.get(id_post=id_post, user=username)
             post.delete()
-            messages.success(request, 'delete post')
+            messages.success(request, 'Delete post successfully')
             return redirect('/')
         except Exception as e:
             messages.error(request, f'An error occurred while performing the delete post operation. Error: {e}')
