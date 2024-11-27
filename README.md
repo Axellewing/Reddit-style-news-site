@@ -4,7 +4,7 @@
 
 Have you ever wondered at one time how much social media is around? And each of them offers thousands of opportunities for communication between people. My TellIt project is an attempt to create one of these social networks. In this network, you can search for idols, watch their posts, and like the ones you like. And this is just the beginning!
 
-[Live version.](https://tellit-7c47373d398e.herokuapp.com/)
+[Live version.](https://tellit-21cb54824fc8.herokuapp.com/signin)
 
 ## Existing Features
 
