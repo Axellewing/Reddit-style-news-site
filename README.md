@@ -135,6 +135,47 @@ These tests ensure robust client-side behavior, especially for interactive eleme
     - No errors were returned from backend tests.
 - Frontend Tests (JavaScript/QUnit)
     - No errors were returned from frontend tests.
+ 
+ ### Design Process
+
+ **User-Centric Design:**
+   - Objective: To create a clean and intuitive interface for user profile management, social interactions, and navigation.
+   - Features Implemented:
+      - Profile Settings: Users can customize their profile picture, bio, and birthday.
+      - Search Functionality: A feature that enables users to find friends and subscribe to their updates.
+      - Error Handling: Custom 404 error pages, including a mini-game for an engaging experience.
+  
+ **Functionality and Usability:**
+   - Login/Signup Flow: Designed to be simple and efficient for new and returning users.
+   - User Engagement:
+      - Users can view posts, follow friends, and interact with their network.
+      - AWS integration for storing user-uploaded images.
+   - Error Pages: Thoughtfully crafted with a playful mini-game to maintain user engagement even during disruptions.
+   
+ **Testing Integration:**
+   - Extensive testing was carried out on both the backend and frontend to ensure smooth user experiences:
+      - Backend Tests verified the functionality of authentication views, post interactions, and user settings updates.
+      - Frontend Tests confirmed the robustness of interactive elements, including modals and mini-games.
+
+ **Scalability:**
+   - Backend Logic:
+      - Secure user authentication and session management.
+      - Data validation to handle invalid inputs gracefully.
+
+ **Agile tool:**
+   - Project:
+      - Created Milestones in the project with clear mapping of User stories and issues to solve along the development stage. 
+    
+ **Challenges and Solutions:**
+   - Challenge: Inconsistent settings for Heroku deployment caused delays.
+      - Solution: The issue was resolved by debugging the settings and ensuring logs were monitored.
+   - Challenge: Maintaining user session state.
+      - Solution: Implemented cookies to save the user’s login state.
+
+  **Future Enhancements:**
+   - Adding a messenger feature for direct communication.
+   - Enabling commenting on photos to enhance social interaction.
+
 
 ## Deployment
 
