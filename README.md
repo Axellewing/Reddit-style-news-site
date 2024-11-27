@@ -64,9 +64,52 @@ For errors on the server side or errors during routing, I decided to implement a
 ## Testing
 
 I have manually tested this project by doing the following:
+
  - Passed the code through a PEP8 linter and confirmed no problems.
  - Given invalid inputs pass.
  - Tested in my local env and the Heroku env.
+
+Additionally, I implemented automated testing for different aspects of the project:
+
+### Backend Tests (Python/Django)
+
+Using Django's TestCase framework, I verified the correctness of the following:
+
+1. **Models**:
+   - **Profile Model**: Verified user profile creation and string representation.
+   - **Post Model**: Tested post creation with caption, image, and user details.
+   - **Like Model**: Ensured likes are correctly linked to users and posts.
+   - **Follower Count Model**: Confirmed follower relationships between users.
+
+2. **Views**:
+   - **Authentication Views**:
+     - Verified login and logout functionality.
+   - **Index View**:
+     - Tested access for logged-in users.
+     - Verified redirection for unauthenticated users.
+   - **Post Interaction Views**:
+     - Validated posting new content.
+     - Confirmed ability to like/unlike posts.
+   - **Search View**:
+     - Ensured search results correctly display matching users.
+   - **Settings View**:
+     - Confirmed user settings update successfully.
+   - **Delete Views**:
+     - Verified deletion of user profiles and posts.
+
+### Frontend Tests (JavaScript/QUnit)
+
+Using QUnit, I tested JavaScript functionality for:
+
+1. **messages.js**:
+   - Verified modal display logic.
+   - Ensured no errors occur when the modal is absent.
+
+2. **404.js**:
+   - Confirmed the `game` function is invoked on `DOMContentLoaded` event.
+   - Checked proper canvas initialization with correct dimensions (560x312).
+
+These tests ensure robust client-side behavior, especially for interactive elements like modals and mini-games.
 
  ### Bugs
 
@@ -88,6 +131,10 @@ I have manually tested this project by doing the following:
 
 - PEP8
     - No errors were returned from PEP8online.com.
+- Backend Tests (Python/Django)
+    - No errors were returned from backend tests.
+- Frontend Tests (JavaScript/QUnit)
+    - No errors were returned from frontend tests.
 
 ## Deployment
 
@@ -99,3 +146,4 @@ This project was deployed using Heroku.
     - Set the build packs to `Python` in that order
     - Link the Heroku app to the repository
     - Click on Deploy
+
